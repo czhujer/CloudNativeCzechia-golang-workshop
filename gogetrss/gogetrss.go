@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/xml"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -11,11 +12,26 @@ import (
 // URL dwhere to read Atom Feed
 var URL string
 
+type Feed struct {
+	Entries []FeedEntry `xml:"entry"`
+}
+
+type FeedEntry struct {
+	Title   string   `xml:"title"`
+	Updated string   `xml:"updated"`
+	Link    LinkItem `xml:"link,attr"`
+}
+
+type LinkItem struct {
+	Link string `xml:"href,attr"`
+}
+
 // entrypoint for  the program
 func main() {
 	log.Printf("Started parsing %s", URL)
 
-	client := &http.Client{}
+	// https://golang.org/pkg/net/http/#pkg-overview
+	client := http.Client{}
 
 	req, err := http.NewRequest("GET", URL, nil)
 	if err != nil {
@@ -23,7 +39,6 @@ func main() {
 	}
 
 	req.Header.Add("User-Agent", "Golang Bot 1.0")
-
 	resp, err := client.Do(req)
 
 	if err != nil {
@@ -37,7 +52,18 @@ func main() {
 	}
 
 	//fmt.Print(string(body))
-	fmt.Print(string(body))
+
+	// xml decode
+	// https://golang.org/pkg/encoding/xml/
+	feed := Feed{}
+	err = xml.Unmarshal(body, &feed)
+	if err != nil {
+		log.Fatalf("Cannot parse response: %s", err.Error())
+	}
+
+	for index, item := range feed.Entries {
+		fmt.Printf("%d: %s, %s, %s\n", index, item.Updated, item.Title, item.Link.Link)
+	}
 
 }
 
