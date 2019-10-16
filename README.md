@@ -9,3 +9,5 @@ tasks from Golang workshop by RedHat & Cloud Native Czechia
 - repository: https://github.com/CloudNativeCzechia/GolangWorkshop
 
 - home page: http://cloudnative.cz/#about_us
+
+- twitter account: https://twitter.com/CloudNativeCz
