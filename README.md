@@ -6,6 +6,6 @@ tasks from Golang workshop by RedHat & Cloud Native Czechia
 
 - slides: [<https://hackmd.io/@petrkotas/S1Zv0d_uB#/31>](https://hackmd.io/@petrkotas/S1Zv0d_uB#/31)
 
-- repository: https://github.com/czhujer/CloudNativeCzechia-golang-workshop
+- repository: https://github.com/CloudNativeCzechia/GolangWorkshop
 
 - home page: http://cloudnative.cz/#about_us
